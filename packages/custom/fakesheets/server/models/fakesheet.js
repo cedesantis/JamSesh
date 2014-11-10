@@ -10,7 +10,7 @@ var mongoose = require('mongoose'),
 /**
  * Article Schema
  */
-var ArticleSchema = new Schema({
+var FakesheetSchema = new Schema({
   created: {
     type: Date,
     default: Date.now
@@ -34,21 +34,21 @@ var ArticleSchema = new Schema({
 /**
  * Validations
  */
-ArticleSchema.path('title').validate(function(title) {
+FakesheetSchema.path('title').validate(function(title) {
   return !!title;
 }, 'Title cannot be blank');
 
-ArticleSchema.path('content').validate(function(content) {
+FakesheetSchema.path('content').validate(function(content) {
   return !!content;
 }, 'Content cannot be blank');
 
 /**
  * Statics
  */
-ArticleSchema.statics.load = function(id, cb) {
+FakesheetSchema.statics.load = function(id, cb) {
   this.findOne({
     _id: id
   }).populate('user', 'name username').exec(cb);
 };
 
-mongoose.model('Article', ArticleSchema);
+mongoose.model('FakeSheet', FakesheetSchema);
