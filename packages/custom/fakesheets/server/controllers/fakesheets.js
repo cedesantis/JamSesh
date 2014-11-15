@@ -11,10 +11,10 @@ var mongoose = require('mongoose'),
 /**
  * Find article by id
  */
-exports.article = function(req, res, next, id) {
-  Article.load(id, function(err, article) {
+exports.fakesheet = function(req, res, next, id) {
+  Fakesheet.load(id, function(err, fakesheet) {
     if (err) return next(err);
-    if (!article) return next(new Error('Failed to load article ' + id));
+    if (!fakesheet) return next(new Error('Failed to load fakesheet ' + id));
     req.fakesheet = fakesheet;
     next();
   });
@@ -42,14 +42,14 @@ exports.create = function(req, res) {
  * Update an fakesheet
  */
 exports.update = function(req, res) {
-  var article = req.article;
+  var fakesheet = req.fakesheet;
 
   fakesheet = _.extend(fakesheet, req.body);
 
   fakesheet.save(function(err) {
     if (err) {
       return res.json(500, {
-        error: 'Cannot update the article'
+        error: 'Cannot update the fakesheet'
       });
     }
     res.json(fakesheet);
@@ -88,7 +88,7 @@ exports.all = function(req, res) {
   Fakesheet.find().sort('-created').populate('user', 'name username').exec(function(err, fakesheets) {
     if (err) {
       return res.json(500, {
-        error: 'Cannot list the articles'
+        error: 'Cannot list the fakesheets'
       });
     }
     res.json(fakesheets);
